@@ -1,0 +1,9 @@
+.letter{
+    @apply p-2 w-12  flex m-1 text-4xl uppercase justify-center items-center;;
+}
+
+.active-letter{
+    background-color: green;
+}
+
+/* #container-letter:nth-child(){background-color: green;} */
