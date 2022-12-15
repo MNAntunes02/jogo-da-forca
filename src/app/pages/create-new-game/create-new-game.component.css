@@ -1,5 +1,5 @@
 .letter{
-    @apply p-2 w-12  flex m-1 text-4xl uppercase justify-center items-center;;
+    @apply p-2 w-12  flex m-1 text-4xl uppercase justify-center items-center select-none rounded-lg;
 }
 
 .active-letter{

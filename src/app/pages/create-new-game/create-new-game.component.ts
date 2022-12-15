@@ -43,6 +43,7 @@ export class CreateNewGameComponent implements OnInit {
     this.wordForGame = this.word.nativeElement.value; // pegando palavra do input
     this.arr = this.wordForGame.split(''); // array da palavra escrita no input
     this.gabarito = [...new Set(this.arr)].sort(); // array da palavra sem repetição
+    this.word.nativeElement.value = '';
   }
 
   checkLetter(): void{
@@ -63,7 +64,7 @@ export class CreateNewGameComponent implements OnInit {
       //inserindo letra q foi errada no array errou[]
       this.errou.push(this.letra);
 
-      if(this.tentativas > 1){
+      if(this.tentativas >= 1){
         this.tentativas--;
         console.log(`Restam ${this.tentativas} tentativas`)
       }else{
@@ -95,5 +96,18 @@ export class CreateNewGameComponent implements OnInit {
     return arr1.length === arr2.length && arr1.every((item:any, index:any) => item === arr2[index])
   }
 
+
+  resetGame(){
+    this.wordForGame = ''; // string para começar o jogo
+    this.arr = []; // array da palavra
+    this.gabarito = []; // array da palavra sem repetição
+    this.arrUser = []; // array de acertos do player
+    this.ganhou = false; // jogo foi ganho
+    this.errou = []; // array de erros do player
+    this.tentativas = 5; // numero de tentativas
+    this.arrDivs = []; // array de divs da palavra
+    this.letra = '';
+    this.word.nativeElement.value = '';
+  }
 
 }

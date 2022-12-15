@@ -1,39 +1,53 @@
-<div class="w-10/12 h-screen mx-auto">
+<div class="container mx-auto">
 
-    <div class="flex justify-center items-center w-full h-32 " #form>
-        <input class="p-2 border border-neutral-600 uppercase" type="password" name="" id="" #word>
-        <button class="p-2 bg-neutral-600 text-white" (click)="getWord()">Começar</button>
+    <div class="flex justify-center items-center w-full h-32 text-5xl font-black text-slate-200 mt-14">
+        <span class="border-b-4 border-slate-200 pb-2">JOGO DA FORCA</span>
     </div>
 
-    <div class="flex items-center mt-52 w-full">
+    <div *ngIf="wordForGame == ''" class="flex justify-center items-center w-full h-32 " #form>
+        <p class="text-xl font-bold pr-3 text-slate-200">Digite uma palavra: </p>
+        <input class="p-2 border-4 border-slate-700 uppercase rounded-l-xl" type="password" name="" id="" #word>
+        <button class="p-2 border-4 border-slate-700 bg-slate-700 text-white rounded-r-xl" (click)="getWord()" [disabled]="gabarito == []">Começar</button>
+    </div>
 
-        <div class="flex w-5/12 flex-col justify-center items-center">
-            <div class="text-5xl leading-7 flex flex-col text-center font-bold">{{ tentativas }}<span class="text-center text-lg pt-5">chutes disponiveis</span> </div>
-            <div class="flex w-full justify-center items-center pt-2">
-                <br>
-                <div class="flex text-red-700 font-bold mx-3 uppercase text-2xl">
-                    <div class="px-1" *ngFor="let i of errou">{{ i }}</div> 
-                </div>
-            </div>    
+    <div *ngIf="wordForGame !== ''" class="flex mt-24 w-full lg:flex-row flex-col justify-center items-center">
+
+        <div class="flex h-60 w-full lg:w-5/12 flex-col justify-center items-center">
+            <div class="border-2 h-full border-slate-400 rounded-xl p-12 ">
+                <div class="text-5xl leading-7 flex flex-col text-center font-bold text-slate-200">{{ tentativas }}<span class="text-center text-lg pt-5">chutes disponiveis</span> </div>
+                <div class="flex w-full justify-center items-center pt-2">
+                    <br>
+                    <div class="flex text-red-700 font-bold mx-3 uppercase text-2xl">
+                        <div class="px-1" *ngFor="let i of errou">{{ i }}</div> 
+                    </div>
+                </div>    
+            </div>
         </div>
 
-        <div class="flex  w-7/12 flex-col justify-center items-start">
-            <div class="flex" id="container-letter" #containerLetter>
-                <div *ngFor="let i of arr">
-                    <div class="letter bg-neutral-600 text-transparent" #letterCard>{{ i }}</div>
-                    <!-- <div class="letter bg-neutral-600" #letterCard><span class="absolute bg-neutral-600 p-2 text-white">*</span>{{ i }}</div> -->
+        <div class="flex h-60 w-full lg:w-7/12 flex-col justify-baseline items-baseline">
+            <div class="border-2 h-full w-full border-slate-400 rounded-xl p-14">
+                <div class="flex pb-8 overflow-x-auto" id="container-letter" #containerLetter>
+                    <div *ngFor="let i of arr">
+                        <div class="letter bg-slate-700 text-transparent" #letterCard>{{ i }}</div>
+                    </div>
                 </div>
-            </div>
-            <div class="flex items-center">
-                <p class="text-xl font-bold pr-3">Digite uma letra: </p>
-                <input class="p-2 w-12 border border-neutral-600 uppercase" type="text" name="" id="" #letter>
-                <button class="p-2 bg-neutral-600 text-white" (click)="checkLetter()" [disabled]="ganhou == true || tentativas == 0">OK</button>
+                <div class="flex items-center">
+                    <p class="text-xl font-bold pr-3 text-slate-200">Digite uma letra: </p>
+                    <input class="p-2 w-12 border-4 border-slate-700 uppercase rounded-l-xl" type="text" name="" id=""  maxlength="1" #letter>
+                    <button class="p-2 border-4 border-slate-700 bg-slate-700 text-white rounded-r-xl" (click)="checkLetter()" [disabled]="ganhou == true || tentativas == 0">OK</button>
+                </div>
             </div>
         </div>
         
     </div>
 
-    <div *ngIf="ganhou == true" class="flex justify-center items-center w-full h-32 text-green-500 text-5xl font-bold mt-52">VOCÊ GANHOU!!!!!!</div>
-    <div *ngIf="tentativas == 0" class="flex justify-center items-center w-full h-32 text-red-500 text-5xl font-bold mt-52">VOCÊ PERDEU =(</div>
+    <div *ngIf="ganhou == true" class="flex justify-center items-center w-full h-32 text-green-500 text-5xl font-bold mt-32 flex-col gap-5 text-center">
+        VOCÊ GANHOU!!!!!!
+        <button class="p-2 border-4 border-slate-700 bg-slate-700 text-white rounded-xl text-base" (click)="resetGame()">Jogar de novo</button>
+    </div>
+    <div *ngIf="tentativas == 0" class="flex justify-center items-center w-full h-32 text-red-500 text-5xl font-bold mt-32 flex-col gap-5">
+        VOCÊ PERDEU =(
+        <button class="p-2 border-4 border-slate-700 bg-slate-700 text-white rounded-xl text-base" (click)="resetGame()">Jogar de novo</button>
+    </div>
 
 </div>
