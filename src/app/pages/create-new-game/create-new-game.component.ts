@@ -19,7 +19,7 @@ export class CreateNewGameComponent implements OnInit {
   arrUser: any = []; // array de acertos do player
   ganhou: boolean = false; // jogo foi ganho
   errou: any = []; // array de erros do player
-  tentativas: any = 5; // numero de tentativas
+  tentativas: any = 0; // numero de tentativas
   arrDivs:any = []; // array de divs da palavra
   letra:string = '';
 
@@ -35,12 +35,12 @@ export class CreateNewGameComponent implements OnInit {
     this.wordForGame = this.word.nativeElement.value; // pegando palavra do input
     this.arr = this.wordForGame.split(''); // array da palavra escrita no input
     this.gabarito = [...new Set(this.arr)].sort(); // array da palavra sem repetição
-    
   }
 
 
   getWord(): void{
     this.wordForGame = this.word.nativeElement.value; // pegando palavra do input
+    this.tentativas = this.wordForGame.length*2;  // numero de tentaivas baseado na palavra
     this.arr = this.wordForGame.split(''); // array da palavra escrita no input
     this.gabarito = [...new Set(this.arr)].sort(); // array da palavra sem repetição
     this.word.nativeElement.value = '';
@@ -50,42 +50,57 @@ export class CreateNewGameComponent implements OnInit {
 
     this.letra = this.letter.nativeElement.value;
 
-    if (this.arr.includes(this.letra)) {
-      for (let i = 0; i < this.arr.length; i++) {
-        if(this.arr[i] == this.letra){
-          this.arrUser.push(this.letra);
+    if (this.letra == ''){
+      console.log("opção invalida");
+    }
+
+    if (this.letra !== '') {
+      
+      if (this.arr.includes(this.letra)) {
+        for (let i = 0; i < this.arr.length; i++) {
+
+          if(this.arr[i] == this.letra){
+            this.arrUser.push(this.letra);
+          }
+
         }
-      }
-      this.arrUser = [...new Set(this.arrUser)].sort(); //organizar array em ordem alfabetica
-      this.ganhou = this.compararArray(this.arrUser, this.gabarito) //compara o array dos acertos com o array de gabarito 
-      if(this.ganhou){console.log("GANHOU!!!!!!!")}; // imprimir ganhou se acertar todas as letras
-
-    }else{
-      //inserindo letra q foi errada no array errou[]
-      this.errou.push(this.letra);
-
-      if(this.tentativas >= 1){
-        this.tentativas--;
-        console.log(`Restam ${this.tentativas} tentativas`)
+        this.arrUser = [...new Set(this.arrUser)].sort(); //organizar array em ordem alfabetica
+        this.ganhou = this.compararArray(this.arrUser, this.gabarito) //compara o array dos acertos com o array de gabarito 
+        if(this.ganhou){console.log("GANHOU!!!!!!!")}; // imprimir ganhou se acertar todas as letras
+  
       }else{
-        console.log("Você perdeu")
+
+        //inserindo letra q foi errada no array errou[]
+        this.errou.push(this.letra);
+  
+        if(this.tentativas >= 1){
+          this.tentativas--;
+          console.log(`Restam ${this.tentativas} tentativas`)
+        }else{
+          console.log("Você perdeu")
+        }
+
       }
       
-    }  
+      //criando array de divs que compoe a palavra
+      this.letterCard.forEach((element) => {
 
-    //criando array de divs que compoe a palavra
-    this.letterCard.forEach((element) => {
-      if (this.gabarito.includes(this.letra)) {
-        this.arrDivs.push(element);
+        if (this.gabarito.includes(this.letra)) {
+          this.arrDivs.push(element);
+        }
+
+      })
+      
+      //estilizando as letras descobertas
+      for (let i = 0; i < this.arrDivs.length; i++) {
+
+        if (this.arrDivs[i].nativeElement.innerHTML.includes(this.letra)) {
+          this.arrDivs[i].nativeElement.setAttribute('class','letter bg-green-600 text-white')
+        }
+
       }
-    })
-    
-    //estilizando as letras descobertas
-    for (let i = 0; i < this.arrDivs.length; i++) {
-      if (this.arrDivs[i].nativeElement.innerHTML.includes(this.letra)) {
-        this.arrDivs[i].nativeElement.setAttribute('class','letter bg-green-600 text-white')
-      }
-    }
+
+    }  
 
     this.letter.nativeElement.value = '';
   }

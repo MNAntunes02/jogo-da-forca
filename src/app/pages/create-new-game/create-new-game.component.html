@@ -4,13 +4,15 @@
         <span class="border-b-4 border-slate-200 pb-2">JOGO DA FORCA</span>
     </div>
 
-    <div *ngIf="wordForGame == ''" class="flex justify-center items-center w-full h-32 " #form>
-        <p class="text-xl font-bold pr-3 text-slate-200">Digite uma palavra: </p>
-        <input class="p-2 border-4 border-slate-700 uppercase rounded-l-xl" type="password" name="" id="" #word>
-        <button class="p-2 border-4 border-slate-700 bg-slate-700 text-white rounded-r-xl" (click)="getWord()" [disabled]="gabarito == []">Começar</button>
+    <div *ngIf="wordForGame == ''" class="flex lg:flex-row flex-col justify-center items-center w-full h-32 " #form>
+        <p class="text-xl font-bold pr-3 text-slate-200 lg:pb-0 pb-4">Digite uma palavra: </p>
+        <div>
+            <input class="p-2 border-4 border-slate-700 uppercase rounded-l-xl" type="password" name="" id="" #word>
+            <button class="p-2 border-4 border-slate-700 bg-slate-700 text-white rounded-r-xl" (click)="getWord()" [disabled]="gabarito == []">Começar</button>
+        </div>
     </div>
 
-    <div *ngIf="wordForGame !== ''" class="flex mt-24 w-full lg:flex-row flex-col justify-center items-center">
+    <div *ngIf="wordForGame !== ''" class="flex lg:mt-24 w-full lg:flex-row flex-col justify-center items-center">
 
         <div class="flex h-60 w-full lg:w-5/12 flex-col justify-center items-center">
             <div class="border-2 h-full border-slate-400 rounded-xl p-12 ">
@@ -24,7 +26,7 @@
             </div>
         </div>
 
-        <div class="flex h-60 w-full lg:w-7/12 flex-col justify-baseline items-baseline">
+        <div class="flex h-60 w-full lg:w-7/12 flex-col justify-baseline items-baseline lg:mt-0 mt-4">
             <div class="border-2 h-full w-full border-slate-400 rounded-xl p-14">
                 <div class="flex pb-8 overflow-x-auto" id="container-letter" #containerLetter>
                     <div *ngFor="let i of arr">
@@ -45,7 +47,7 @@
         VOCÊ GANHOU!!!!!!
         <button class="p-2 border-4 border-slate-700 bg-slate-700 text-white rounded-xl text-base" (click)="resetGame()">Jogar de novo</button>
     </div>
-    <div *ngIf="tentativas == 0" class="flex justify-center items-center w-full h-32 text-red-500 text-5xl font-bold mt-32 flex-col gap-5">
+    <div *ngIf="tentativas == 0 && wordForGame.length > 1"class="flex justify-center items-center w-full h-32 text-red-500 text-5xl font-bold mt-32 flex-col gap-5">
         VOCÊ PERDEU =(
         <button class="p-2 border-4 border-slate-700 bg-slate-700 text-white rounded-xl text-base" (click)="resetGame()">Jogar de novo</button>
     </div>
