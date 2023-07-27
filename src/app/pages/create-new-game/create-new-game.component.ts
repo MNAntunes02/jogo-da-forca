@@ -76,8 +76,20 @@ export class CreateNewGameComponent implements OnInit {
         if(this.tentativas >= 1){
           this.tentativas--;
           console.log(`Restam ${this.tentativas} tentativas`)
-        }else{
-          console.log("Você perdeu")
+          if (this.tentativas == 0) {
+            
+            //criando array de divs que compoe a palavra
+            this.letterCard.forEach((element) => {
+              
+              this.arrDivs.push(element);
+              
+            })
+            
+            //estilizando as letras da palavra quando perde
+            for (let i = 0; i < this.arrDivs.length; i++) {
+                this.arrDivs[i].nativeElement.setAttribute('class','letter bg-red-600 text-white')
+            }
+          }
         }
 
       }
